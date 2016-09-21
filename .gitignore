@@ -1,0 +1,6 @@
+# Python stuff
+__pycache__/
+*.py[cod]
+
+# Django
+deployeveryday/db.sqlite3

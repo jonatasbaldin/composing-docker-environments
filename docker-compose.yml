@@ -1,0 +1,11 @@
+version: '2'
+services:
+  db:
+    image: postgres
+  web:
+    build: ./web
+    command: "python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - "./deployeveryday:/code"
+    ports:
+      - "8000:8000"
