@@ -2,10 +2,16 @@ version: '2'
 services:
   db:
     image: postgres
+    environment:
+      # Define our database password, following the image documentation
+      POSTGRES_PASSWORD: '123456A!'
   web:
     build: ./web
-    command: "python manage.py runserver 0.0.0.0:8000"
+    # Avoid race condition by sleeping a while, not the best practice tough
+    command: bash -c "sleep 10 && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - "./deployeveryday:/code"
     ports:
       - "8000:8000"
+    depends_on:
+      - db
