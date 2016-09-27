@@ -5,6 +5,10 @@ services:
     environment:
       # Define our database password, following the image documentation
       POSTGRES_PASSWORD: '123456A!'
+    # Create a named volume to store persistent data, without the inital dot
+    volumes:
+      - data-postgres:/var/lib/postgresql/data
+
   web:
     build: ./web
     # Avoid race condition by sleeping a while, not the best practice tough
@@ -15,3 +19,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
+
+# Need to describe named volumes, weird, I know
+volumes:
+  data-postgres:
