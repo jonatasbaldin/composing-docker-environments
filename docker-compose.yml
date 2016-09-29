@@ -15,10 +15,22 @@ services:
     command: bash -c "sleep 10 && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - "./deployeveryday:/code"
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
     depends_on:
       - db
+      - nginx
+    environment:
+      VIRTUAL_HOST: 'localhost'
+
+  nginx:
+    image: jwilder/nginx-proxy
+    # Expose socket to nginx-proxy
+    volumes:
+      - "/var/run/docker.sock:/tmp/docker.sock:ro"
+    ports:
+      - "80:80"
+
 
 # Need to describe named volumes, weird, I know
 volumes:
